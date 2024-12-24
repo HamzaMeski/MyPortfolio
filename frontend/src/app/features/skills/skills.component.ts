@@ -4,7 +4,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { 
   faJava, faJs, faPhp, faHtml5, faCss3Alt, 
   faAngular, faGithub, faDocker, faLinux, faWindows,
-  faNode 
+  faNode, faGit 
 } from '@fortawesome/free-brands-svg-icons';
 import { 
   faDatabase, faCode, faTools, faLaptopCode, 
@@ -128,7 +128,7 @@ interface SkillCategory {
           <div class="absolute left-1/2 bottom-0 md:bottom-[5%] -translate-x-1/2 w-full md:w-auto">
             <h3 class="text-xl md:text-2xl text-[#00ff88] text-center font-mono mb-4 md:mb-6 tracking-wide">Tools</h3>
             <div class="flex flex-wrap md:flex-nowrap gap-6 md:gap-8 justify-center">
-              <ng-container *ngFor="let skill of getSkillsByCategory('Tools & Technologies'); trackBy: trackSkill">
+              <ng-container *ngFor="let skill of getSkillsByCategory('Tools'); trackBy: trackSkill">
                 <div class="skill-circle group">
                   <div class="w-16 h-16 md:w-24 md:h-24 rounded-full border-2 border-[#00ff88]/50 
                               flex items-center justify-center bg-black/50 backdrop-blur-lg
@@ -269,27 +269,21 @@ export class SkillsComponent {
       ]
     },
     {
-      name: 'Databases',
+      name: 'Tools',
       skills: [
-        { name: 'PostgreSQL', icon: faDatabase, color: '#336791' },
-        { name: 'MySQL', icon: faDatabase, color: '#4479a1' },
-        { name: 'MongoDB', icon: faDatabase, color: '#47a248' }
-      ]
-    },
-    {
-      name: 'Tools & Technologies',
-      skills: [
-        { name: 'Git & GitHub', icon: faGithub, color: '#f05032' },
+        { name: 'Git', icon: faGit, color: '#f05032' },
+        { name: 'GitHub', icon: faGithub, color: '#181717' },
         { name: 'Docker', icon: faDocker, color: '#2496ed' },
         { name: 'Terminal', icon: faTerminal, color: '#ffffff' },
         { name: 'DevOps', icon: faCog, color: '#00ff88' }
       ]
     },
     {
-      name: 'Operating Systems',
+      name: 'Databases',
       skills: [
-        { name: 'Linux', icon: faLinux, color: '#fcc624' },
-        { name: 'Windows', icon: faWindows, color: '#00a4ef' }
+        { name: 'PostgreSQL', icon: faDatabase, color: '#336791' },
+        { name: 'MySQL', icon: faDatabase, color: '#4479a1' },
+        { name: 'MongoDB', icon: faDatabase, color: '#47a248' }
       ]
     }
   ];
