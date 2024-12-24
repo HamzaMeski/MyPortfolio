@@ -1,1 +1,18 @@
-<p>skills works!</p>
+<div>
+    <h2 class="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">Skills</h2>
+    <!-- Tech Stack Overview -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+    <div *ngFor="let category of skillCategories" 
+            class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+        <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+        {{category.category}}
+        </h3>
+        <div class="flex flex-wrap gap-2">
+        <span *ngFor="let skill of category.skills" 
+                class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-300">
+            {{skill}}
+        </span>
+        </div>
+    </div>
+    </div>
+</div>
