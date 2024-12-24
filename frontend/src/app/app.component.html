@@ -1,11 +1,17 @@
-<div class="flex flex-col min-h-screen">
-  <app-header></app-header>
-  
-  <main class="flex-grow pt-16">
-    <div class="container mx-auto px-4 py-8">
-      <router-outlet></router-outlet>
-    </div>
-  </main>
+<app-header></app-header>
+    
+<main>
+  <section id="home">
+    <app-home></app-home>
+  </section>
 
-  <app-footer></app-footer>
-</div>
+  <section id="projects">
+    <app-projects></app-projects>
+  </section>
+
+  <section id="skills">
+    <app-skills></app-skills>
+  </section>
+</main>
+
+<app-footer></app-footer>

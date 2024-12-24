@@ -15,24 +15,6 @@ import { FooterComponent } from './layout/footer/footer.component';
     SkillsComponent,
     FooterComponent
   ],
-  template: `
-    <app-header></app-header>
-    
-    <main>
-      <section id="home">
-        <app-home></app-home>
-      </section>
-
-      <section id="projects">
-        <app-projects></app-projects>
-      </section>
-
-      <section id="skills">
-        <app-skills></app-skills>
-      </section>
-    </main>
-
-    <app-footer></app-footer>
-  `
+  templateUrl: './app.component.html'
 })
 export class AppComponent {}
