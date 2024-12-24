@@ -41,29 +41,6 @@ import { gsap } from 'gsap';
                 Contact Me
               </button>
             </div>
-            
-            <!-- Tech stack -->
-            <div class="pt-8 border-t border-gray-800">
-              <h3 class="text-[#00ff88] font-mono mb-4">Tech Stack</h3>
-              <div class="grid grid-cols-2 gap-4">
-                <div class="flex items-center space-x-3 text-gray-400">
-                  <span class="w-2 h-2 bg-[#00ff88]"></span>
-                  <span>Spring Boot</span>
-                </div>
-                <div class="flex items-center space-x-3 text-gray-400">
-                  <span class="w-2 h-2 bg-[#00ff88]"></span>
-                  <span>Angular</span>
-                </div>
-                <div class="flex items-center space-x-3 text-gray-400">
-                  <span class="w-2 h-2 bg-[#00ff88]"></span>
-                  <span>TypeScript</span>
-                </div>
-                <div class="flex items-center space-x-3 text-gray-400">
-                  <span class="w-2 h-2 bg-[#00ff88]"></span>
-                  <span>Java</span>
-                </div>
-              </div>
-            </div>
           </div>
           
           <!-- 3D Canvas -->
