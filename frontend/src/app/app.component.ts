@@ -8,7 +8,7 @@ import { SkillsComponent } from './features/skills/skills.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HomeComponent, ProjectsComponent, SkillsComponent],
+  imports: [CommonModule, HomeComponent, ProjectsComponent, SkillsComponent],
   template: `
     <!-- Fixed Sidebar -->
     <nav class="fixed left-0 top-0 h-screen w-20 bg-[#1a2518] flex flex-col items-center py-8 z-50">
