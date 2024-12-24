@@ -86,7 +86,7 @@ import { SkillsComponent } from './features/skills/skills.component';
     </nav>
 
     <!-- Main Content -->
-    <main class="md:ml-24 pb-20 md:pb-0">
+    <main class="md:ml-24 pb-20 md:pb-0 pt-6 md:pt-0">
       <section id="home" class="h-screen" #homeSection><app-home></app-home></section>
       <section id="skills" class="min-h-screen" #skillsSection><app-skills></app-skills></section>
       <section id="projects" class="min-h-screen" #projectsSection><app-projects></app-projects></section>
@@ -113,6 +113,23 @@ import { SkillsComponent } from './features/skills/skills.component';
       0% { transform: scale(1); }
       50% { transform: scale(1.1); }
       100% { transform: scale(1); }
+    }
+
+    /* Mobile optimizations */
+    @media (max-width: 768px) {
+      .active span {
+        opacity: 1;
+        transform: scale(1.1);
+      }
+      
+      :host {
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+        padding-top: env(safe-area-inset-top, 16px);
+      }
+
+      section {
+        scroll-margin-top: 1rem;
+      }
     }
 
     /* Hide scrollbar but keep functionality */
