@@ -136,6 +136,13 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   private sphere!: THREE.Mesh;
   private animationFrameId!: number;
 
+  titles: string[] = [
+    'Software Engineer',
+    'Full Stack Developer',
+    'Java Spring Developer',
+    'Angular Developer'
+  ];
+
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngAfterViewInit(): void {
@@ -163,13 +170,12 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
       .to(this.canvas3D.nativeElement, { x: 0, opacity: 1, duration: 1 }, '-=0.8');
 
     // Typewriter effect
-    const roles = ['Full Stack Developer', 'Java Spring Expert', 'Angular Developer'];
     let currentRole = 0;
 
     const typeRole = () => {
       gsap.to(this.roleText.nativeElement, {
         duration: 1,
-        text: roles[currentRole],
+        text: this.titles[currentRole],
         ease: 'none',
         onComplete: () => {
           setTimeout(() => {
@@ -178,7 +184,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
               text: '',
               ease: 'none',
               onComplete: () => {
-                currentRole = (currentRole + 1) % roles.length;
+                currentRole = (currentRole + 1) % this.titles.length;
                 typeRole();
               }
             });
