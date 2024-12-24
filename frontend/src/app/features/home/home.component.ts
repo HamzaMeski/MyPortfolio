@@ -221,23 +221,27 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  private handleMouseMove = (event: MouseEvent) => {
-    const rect = this.canvas.nativeElement.getBoundingClientRect();
-    this.mouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-    this.mouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-  };
-
-  private handleMouseLeave = () => {
-    this.mouseX = 0;
-    this.mouseY = 0;
-  };
-
   private setupMouseListeners(): void {
     if (this.canvas?.nativeElement) {
       this.canvas.nativeElement.addEventListener('mousemove', this.handleMouseMove);
       this.canvas.nativeElement.addEventListener('mouseleave', this.handleMouseLeave);
     }
   }
+
+  private handleMouseMove = (event: MouseEvent) => {
+    if (this.canvas?.nativeElement) {
+      const rect = this.canvas.nativeElement.getBoundingClientRect();
+      // Calculate mouse position relative to the center of the screen
+      this.mouseX = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
+      this.mouseY = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
+    }
+  };
+
+  private handleMouseLeave = () => {
+    // Smoothly return to center
+    this.mouseX = 0;
+    this.mouseY = 0;
+  };
 
   private initScene(): void {
     this.scene = new THREE.Scene();
@@ -453,75 +457,31 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
     standGroup.add(base, pole, connector);
 
-    // Mechanical Keyboard
-    const keyboardGroup = this.createMechanicalKeyboard();
-    keyboardGroup.scale.set(3, 2.5, 2.5);
-    keyboardGroup.position.y = -4.5;
-    keyboardGroup.position.z = 2;
-    keyboardGroup.rotation.x = -0.2;
-
     // Add all components
     const monitorGroup = new THREE.Group();
     monitorGroup.add(monitor, screen, backPanel, topEdge, bottomEdge);
     
-    this.computer.add(monitorGroup, standGroup, keyboardGroup);
+    this.computer.add(monitorGroup, standGroup);
     this.scene.add(this.computer);
 
-    // Initial position adjustments
+    // Initial position and rotation
     this.computer.position.y = 1;
-  }
-
-  private createMechanicalKeyboard(): THREE.Group {
-    const keyboard = new THREE.Group();
-    const keySpacing = 0.12;
-    const keySize = 0.1;
-    const rows = 6;
-    const keysPerRow = 15;
-
-    const keyGeometry = new THREE.BoxGeometry(keySize, keySize, keySize * 0.5);
-    const keyMaterial = new THREE.MeshPhongMaterial({
-      color: 0x333333,
-      shininess: 100,
-      specular: 0x666666
-    });
-
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < keysPerRow; col++) {
-        const key = new THREE.Mesh(keyGeometry, keyMaterial);
-        key.position.x = (col - keysPerRow / 2) * keySpacing;
-        key.position.y = (row - rows / 2) * keySpacing;
-        keyboard.add(key);
-      }
-    }
-
-    // Add keyboard base
-    const baseGeometry = new THREE.BoxGeometry(2, 0.8, 0.1);
-    const baseMaterial = new THREE.MeshPhongMaterial({
-      color: 0x222222,
-      shininess: 50,
-      specular: 0x444444
-    });
-    const base = new THREE.Mesh(baseGeometry, baseMaterial);
-    base.position.z = -0.1;
-    keyboard.add(base);
-
-    return keyboard;
-  }
-
-  private updateScreenCode() {
-    // No need to update screen code as it's now handled by createScreenMaterial
+    
+    // Tilt the entire computer slightly back for better view
+    this.computer.rotation.x = Math.PI * 0.05;
   }
 
   private animate(): void {
     this.animationFrameId = requestAnimationFrame(() => this.animate());
     
     if (this.computer) {
-      // Update computer rotation based on mouse position
-      const targetRotationX = (this.mouseY - window.innerHeight / 2) * 0.001;
-      const targetRotationY = (this.mouseX - window.innerWidth / 2) * 0.001;
+      // Calculate target rotation with increased sensitivity and limits
+      const targetRotationX = Math.max(-0.3, Math.min(0.3, this.mouseY * -0.5));
+      const targetRotationY = Math.max(-0.5, Math.min(0.5, this.mouseX * 0.5));
       
-      this.computer.rotation.x += (targetRotationX - this.computer.rotation.x) * 0.05;
-      this.computer.rotation.y += (targetRotationY - this.computer.rotation.y) * 0.05;
+      // Smooth interpolation
+      this.computer.rotation.x += (targetRotationX - this.computer.rotation.x) * 0.1;
+      this.computer.rotation.y += (targetRotationY - this.computer.rotation.y) * 0.1;
     }
     
     this.renderer.render(this.scene, this.camera);
