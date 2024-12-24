@@ -45,7 +45,7 @@ interface SkillCategory {
 
       <!-- Skills Network -->
       <div class="container mx-auto px-4 relative z-10">
-        <div class="skills-network min-h-[600px] md:min-h-[800px]">
+        <div class="skills-network min-h-[800px] md:min-h-[900px] relative">
           <!-- Center Circle - Main Skills -->
           <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
             <div class="skill-circle group main-circle">
@@ -61,19 +61,19 @@ interface SkillCategory {
           <!-- Frameworks Circle Group -->
           <div class="absolute left-1/2 top-0 md:top-[15%] -translate-x-1/2 w-full md:w-auto">
             <h3 class="text-xl md:text-2xl text-[#00ff88] text-center font-mono mb-4 md:mb-6 tracking-wide">Frameworks</h3>
-            <div class="flex flex-wrap md:flex-nowrap gap-4 md:gap-8 justify-center">
+            <div class="flex flex-wrap md:flex-nowrap gap-6 md:gap-8 justify-center">
               <ng-container *ngFor="let skill of getSkillsByCategory('Frameworks'); trackBy: trackSkill">
-                <div class="skill-circle group">
-                  <div class="w-20 h-20 md:w-24 md:h-24 rounded-full border-2 border-[#00ff88]/50 
+                <div class="skill-circle group relative">
+                  <div class="w-16 h-16 md:w-24 md:h-24 rounded-full border-2 border-[#00ff88]/50 
                               flex items-center justify-center bg-black/50 backdrop-blur-lg
                               transform transition-all duration-300 group-hover:scale-110
                               group-hover:border-[#00ff88] group-hover:shadow-[0_0_20px_rgba(0,255,136,0.3)]">
                     <fa-icon [icon]="skill.icon" [style.color]="skill.color" 
-                            class="text-2xl md:text-3xl transform transition-all duration-300 group-hover:scale-110">
+                            class="text-xl md:text-3xl transform transition-all duration-300 group-hover:scale-110">
                     </fa-icon>
                   </div>
                   <div class="text-center mt-2">
-                    <span class="text-gray-300 text-xs md:text-sm font-medium tracking-wide">{{ skill.name }}</span>
+                    <span class="text-gray-300 text-xs md:text-sm font-medium tracking-wide whitespace-nowrap">{{ skill.name }}</span>
                   </div>
                 </div>
               </ng-container>
@@ -81,21 +81,21 @@ interface SkillCategory {
           </div>
 
           <!-- Languages Circle Group -->
-          <div class="absolute left-0 md:left-[5%] top-1/2 -translate-y-1/2 w-full md:w-auto px-4 md:px-0">
+          <div class="absolute left-0 md:left-[10%] top-1/3 md:top-1/2 -translate-y-1/2 w-full md:w-auto px-4 md:px-0">
             <h3 class="text-xl md:text-2xl text-[#00ff88] text-center font-mono mb-4 md:mb-6 tracking-wide">Languages</h3>
-            <div class="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 justify-items-center">
+            <div class="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
               <ng-container *ngFor="let skill of getSkillsByCategory('Languages'); trackBy: trackSkill">
                 <div class="skill-circle group">
-                  <div class="w-20 h-20 md:w-24 md:h-24 rounded-full border-2 border-[#00ff88]/50 
+                  <div class="w-16 h-16 md:w-24 md:h-24 rounded-full border-2 border-[#00ff88]/50 
                               flex items-center justify-center bg-black/50 backdrop-blur-lg
                               transform transition-all duration-300 group-hover:scale-110
                               group-hover:border-[#00ff88] group-hover:shadow-[0_0_20px_rgba(0,255,136,0.3)]">
                     <fa-icon [icon]="skill.icon" [style.color]="skill.color" 
-                            class="text-2xl md:text-3xl transform transition-all duration-300 group-hover:scale-110">
+                            class="text-xl md:text-3xl transform transition-all duration-300 group-hover:scale-110">
                     </fa-icon>
                   </div>
                   <div class="text-center mt-2">
-                    <span class="text-gray-300 text-xs md:text-sm font-medium tracking-wide">{{ skill.name }}</span>
+                    <span class="text-gray-300 text-xs md:text-sm font-medium tracking-wide whitespace-nowrap">{{ skill.name }}</span>
                   </div>
                 </div>
               </ng-container>
@@ -103,21 +103,21 @@ interface SkillCategory {
           </div>
 
           <!-- Databases Circle Group -->
-          <div class="absolute right-0 md:right-[5%] top-1/2 -translate-y-1/2 w-full md:w-auto px-4 md:px-0">
+          <div class="absolute right-0 md:right-[10%] top-2/3 md:top-1/2 -translate-y-1/2 w-full md:w-auto px-4 md:px-0">
             <h3 class="text-xl md:text-2xl text-[#00ff88] text-center font-mono mb-4 md:mb-6 tracking-wide">Databases</h3>
-            <div class="flex flex-wrap md:flex-nowrap gap-4 md:gap-6 justify-center">
+            <div class="flex flex-wrap md:flex-nowrap gap-6 md:gap-8 justify-center">
               <ng-container *ngFor="let skill of getSkillsByCategory('Databases'); trackBy: trackSkill">
                 <div class="skill-circle group">
-                  <div class="w-20 h-20 md:w-24 md:h-24 rounded-full border-2 border-[#00ff88]/50 
+                  <div class="w-16 h-16 md:w-24 md:h-24 rounded-full border-2 border-[#00ff88]/50 
                               flex items-center justify-center bg-black/50 backdrop-blur-lg
                               transform transition-all duration-300 group-hover:scale-110
                               group-hover:border-[#00ff88] group-hover:shadow-[0_0_20px_rgba(0,255,136,0.3)]">
                     <fa-icon [icon]="skill.icon" [style.color]="skill.color" 
-                            class="text-2xl md:text-3xl transform transition-all duration-300 group-hover:scale-110">
+                            class="text-xl md:text-3xl transform transition-all duration-300 group-hover:scale-110">
                     </fa-icon>
                   </div>
                   <div class="text-center mt-2">
-                    <span class="text-gray-300 text-xs md:text-sm font-medium tracking-wide">{{ skill.name }}</span>
+                    <span class="text-gray-300 text-xs md:text-sm font-medium tracking-wide whitespace-nowrap">{{ skill.name }}</span>
                   </div>
                 </div>
               </ng-container>
@@ -127,19 +127,19 @@ interface SkillCategory {
           <!-- Tools Circle Group -->
           <div class="absolute left-1/2 bottom-0 md:bottom-[5%] -translate-x-1/2 w-full md:w-auto">
             <h3 class="text-xl md:text-2xl text-[#00ff88] text-center font-mono mb-4 md:mb-6 tracking-wide">Tools</h3>
-            <div class="flex flex-wrap md:flex-nowrap gap-4 md:gap-6 justify-center">
+            <div class="flex flex-wrap md:flex-nowrap gap-6 md:gap-8 justify-center">
               <ng-container *ngFor="let skill of getSkillsByCategory('Tools & Technologies'); trackBy: trackSkill">
                 <div class="skill-circle group">
-                  <div class="w-20 h-20 md:w-24 md:h-24 rounded-full border-2 border-[#00ff88]/50 
+                  <div class="w-16 h-16 md:w-24 md:h-24 rounded-full border-2 border-[#00ff88]/50 
                               flex items-center justify-center bg-black/50 backdrop-blur-lg
                               transform transition-all duration-300 group-hover:scale-110
                               group-hover:border-[#00ff88] group-hover:shadow-[0_0_20px_rgba(0,255,136,0.3)]">
                     <fa-icon [icon]="skill.icon" [style.color]="skill.color" 
-                            class="text-2xl md:text-3xl transform transition-all duration-300 group-hover:scale-110">
+                            class="text-xl md:text-3xl transform transition-all duration-300 group-hover:scale-110">
                     </fa-icon>
                   </div>
                   <div class="text-center mt-2">
-                    <span class="text-gray-300 text-xs md:text-sm font-medium tracking-wide">{{ skill.name }}</span>
+                    <span class="text-gray-300 text-xs md:text-sm font-medium tracking-wide whitespace-nowrap">{{ skill.name }}</span>
                   </div>
                 </div>
               </ng-container>
@@ -154,12 +154,27 @@ interface SkillCategory {
                 <stop offset="50%" style="stop-color:#00ff88;stop-opacity:0.3" />
                 <stop offset="100%" style="stop-color:#00ff88;stop-opacity:0" />
               </linearGradient>
+              <!-- Add filter for glow effect -->
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
             </defs>
-            <g class="connecting-lines">
+            <g class="connecting-lines" filter="url(#glow)">
+              <!-- Main connections to center -->
               <line x1="50%" y1="50%" x2="50%" y2="20%" class="skill-line" />
               <line x1="50%" y1="50%" x2="20%" y2="50%" class="skill-line" />
               <line x1="50%" y1="50%" x2="80%" y2="50%" class="skill-line" />
               <line x1="50%" y1="50%" x2="50%" y2="80%" class="skill-line" />
+              
+              <!-- Inter-category connections -->
+              <path d="M 20% 50% Q 35% 35% 50% 20%" class="skill-line" fill="none" />
+              <path d="M 80% 50% Q 65% 35% 50% 20%" class="skill-line" fill="none" />
+              <path d="M 20% 50% Q 35% 65% 50% 80%" class="skill-line" fill="none" />
+              <path d="M 80% 50% Q 65% 65% 50% 80%" class="skill-line" fill="none" />
             </g>
           </svg>
         </div>
@@ -173,6 +188,7 @@ interface SkillCategory {
 
     .skill-circle {
       perspective: 1000px;
+      z-index: 10;
     }
 
     .skill-circle:hover fa-icon {
@@ -212,11 +228,23 @@ interface SkillCategory {
 
     @media (max-width: 768px) {
       .skills-network {
-        transform: scale(0.9);
+        transform: scale(0.8);
+        margin: -50px 0;
       }
       
       .connecting-lines {
-        opacity: 0.5;
+        opacity: 0.3;
+      }
+
+      .skill-circle {
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .skills-network {
+        transform: scale(0.7);
+        margin: -100px 0;
       }
     }
   `]
