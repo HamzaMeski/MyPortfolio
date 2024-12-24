@@ -60,23 +60,7 @@ gsap.registerPlugin(TextPlugin);
             </p>
             
             <div class="flex flex-wrap items-center gap-6 transform translate-y-full opacity-0" #buttons>
-              <button class="group relative px-8 py-4 bg-transparent overflow-hidden">
-                <span class="relative z-10 text-black font-semibold transition-colors duration-300 
-                           group-hover:text-white">
-                  View Projects
-                </span>
-                <div class="absolute inset-0 bg-[#00ff88] transform origin-left 
-                           transition-transform duration-300 group-hover:origin-right"></div>
-              </button>
-              
-              <button class="group relative px-8 py-4 bg-transparent overflow-hidden">
-                <span class="relative z-10 text-[#00ff88] font-semibold transition-colors duration-300 
-                           group-hover:text-black">
-                  Contact Me
-                </span>
-                <div class="absolute inset-0 bg-[#00ff88] transform scale-x-0 origin-right 
-                           transition-transform duration-300 group-hover:scale-x-100 group-hover:origin-left"></div>
-              </button>
+             
             </div>
 
             <!-- Social links -->
