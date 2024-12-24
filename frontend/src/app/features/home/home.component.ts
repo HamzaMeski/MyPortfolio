@@ -2,488 +2,194 @@ import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy, PLATFORM_ID
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
-import { CodeDisplayService } from '../../core/services/code-display.service';
-import { screenVertexShader, screenFragmentShader } from '../../core/shaders/screen.glsl';
-
-interface KeyData {
-  initialY: number;
-  animationOffset: number;
-}
-
-interface KeyMesh extends THREE.Mesh<THREE.BoxGeometry, THREE.MeshPhongMaterial> {
-  userData: KeyData;
-}
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="min-h-screen bg-[#0B1221] flex items-center relative overflow-hidden">
-      <!-- Animated gradient background -->
-      <div class="absolute inset-0 bg-gradient-radial from-[#0B1221] via-[#0B1221] to-[#090909] z-0"></div>
+    <div class="min-h-screen bg-black relative overflow-hidden">
+      <!-- Background gradient -->
+      <div class="absolute inset-0 bg-gradient-to-b from-black via-[#001a0d] to-black opacity-50"></div>
       
-      <!-- Animated lines effect -->
-      <div class="absolute inset-0 opacity-20">
-        <div class="matrix-effect"></div>
-      </div>
-
-      <!-- Main content -->
-      <div class="container mx-auto px-4 z-10">
-        <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
-          <!-- Left side: Text content -->
-          <div class="lg:w-1/3 space-y-12" #content>
-            <!-- Glowing text effect -->
-            <div class="relative space-y-4">
-              <div class="inline-block">
-                <span class="text-sm font-mono text-[#4DFFB5] tracking-wider">WELCOME TO MY PORTFOLIO</span>
-                <div class="h-0.5 w-full bg-gradient-to-r from-[#4DFFB5] to-transparent mt-1"></div>
-              </div>
-              <h1 class="text-6xl font-bold text-white leading-tight neon-text">
-                Hi, I'm <span class="text-[#4DFFB5]">Hamza</span>
-              </h1>
-              <div class="text-2xl text-[#4DFFB5] font-mono typing-text">
-                Full Stack Developer
+      <!-- Content wrapper -->
+      <div class="container mx-auto px-4 min-h-screen flex items-center relative z-10">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+          <!-- Text content -->
+          <div class="space-y-8">
+            <div>
+              <h2 class="text-[#00ff88] text-xl font-mono mb-2">Hello, I'm</h2>
+              <h1 class="text-white text-6xl font-bold mb-4">Hamza Meski</h1>
+              <div class="flex items-center space-x-4">
+                <div class="h-[2px] w-12 bg-[#00ff88]"></div>
+                <p class="text-[#00ff88] font-mono">Full Stack Developer</p>
               </div>
             </div>
-
-            <!-- Description -->
-            <div class="space-y-6">
-              <p class="text-lg text-gray-300 leading-relaxed">
-                Passionate about crafting robust and scalable applications using
-                <span class="text-[#4DFFB5]">Java Spring Boot</span> and 
-                <span class="text-[#4DFFB5]">Angular</span>. Currently studying at
-                <span class="text-[#4DFFB5]">YouCode</span>, turning innovative ideas
-                into elegant solutions.
-              </p>
-              <div class="flex gap-6 items-center">
-                <div class="flex items-center gap-2">
-                  <div class="w-2 h-2 rounded-full bg-[#4DFFB5] animate-pulse"></div>
-                  <span class="text-gray-400">Available for opportunities</span>
-                </div>
-                <div class="h-4 w-px bg-gray-700"></div>
-                <div class="text-gray-400">Based in Morocco</div>
-              </div>
-            </div>
-
-            <!-- CTA Buttons -->
-            <div class="flex gap-4">
-              <button class="group px-6 py-3 bg-[#4DFFB5]/10 border border-[#4DFFB5] rounded-lg 
-                           hover:bg-[#4DFFB5]/20 transition-all duration-300 relative overflow-hidden">
-                <span class="relative z-10 text-[#4DFFB5] group-hover:text-white transition-colors">
-                  View Projects
-                </span>
-                <div class="absolute inset-0 bg-[#4DFFB5] transform translate-y-full 
-                           group-hover:translate-y-0 transition-transform duration-300"></div>
+            
+            <p class="text-gray-400 text-lg leading-relaxed">
+              Specializing in Java Spring Boot and Angular development. 
+              Passionate about creating efficient and scalable solutions.
+            </p>
+            
+            <div class="flex items-center space-x-6">
+              <button class="px-6 py-3 bg-[#00ff88] text-black font-semibold rounded-none 
+                           hover:bg-[#00cc6a] transition-colors duration-300">
+                View Projects
               </button>
-              <button class="group px-6 py-3 bg-[#2D9CDB]/10 border border-[#2D9CDB] rounded-lg 
-                           hover:bg-[#2D9CDB]/20 transition-all duration-300 relative overflow-hidden">
-                <span class="relative z-10 text-[#2D9CDB] group-hover:text-white transition-colors">
-                  Contact Me
-                </span>
-                <div class="absolute inset-0 bg-[#2D9CDB] transform translate-y-full 
-                           group-hover:translate-y-0 transition-transform duration-300"></div>
+              <button class="px-6 py-3 border-2 border-[#00ff88] text-[#00ff88] font-semibold rounded-none 
+                           hover:bg-[#00ff88] hover:text-black transition-colors duration-300">
+                Contact Me
               </button>
             </div>
-
+            
             <!-- Tech stack -->
-            <div class="space-y-4">
-              <h3 class="text-xl font-semibold text-[#4DFFB5] font-mono">Tech Stack</h3>
-              <div class="grid grid-cols-4 gap-4">
-                <div class="tech-icon">
-                  <i class="fab fa-java text-2xl text-[#4DFFB5]"></i>
-                  <span class="text-sm text-gray-400">Java</span>
+            <div class="pt-8 border-t border-gray-800">
+              <h3 class="text-[#00ff88] font-mono mb-4">Tech Stack</h3>
+              <div class="grid grid-cols-2 gap-4">
+                <div class="flex items-center space-x-3 text-gray-400">
+                  <span class="w-2 h-2 bg-[#00ff88]"></span>
+                  <span>Spring Boot</span>
                 </div>
-                <div class="tech-icon">
-                  <i class="fab fa-angular text-2xl text-[#4DFFB5]"></i>
-                  <span class="text-sm text-gray-400">Angular</span>
+                <div class="flex items-center space-x-3 text-gray-400">
+                  <span class="w-2 h-2 bg-[#00ff88]"></span>
+                  <span>Angular</span>
                 </div>
-                <div class="tech-icon">
-                  <i class="fas fa-leaf text-2xl text-[#4DFFB5]"></i>
-                  <span class="text-sm text-gray-400">Spring</span>
+                <div class="flex items-center space-x-3 text-gray-400">
+                  <span class="w-2 h-2 bg-[#00ff88]"></span>
+                  <span>TypeScript</span>
                 </div>
-                <div class="tech-icon">
-                  <i class="fab fa-docker text-2xl text-[#4DFFB5]"></i>
-                  <span class="text-sm text-gray-400">Docker</span>
+                <div class="flex items-center space-x-3 text-gray-400">
+                  <span class="w-2 h-2 bg-[#00ff88]"></span>
+                  <span>Java</span>
                 </div>
               </div>
             </div>
           </div>
-
-          <!-- Right side: 3D Computer -->
-          <div class="lg:w-2/3">
-            <div class="relative h-[800px] w-full">
-              <canvas #canvas class="absolute inset-0 w-full h-full cursor-move"></canvas>
-            </div>
+          
+          <!-- 3D Canvas -->
+          <div class="h-[600px] relative">
+            <canvas #canvas class="w-full h-full"></canvas>
           </div>
         </div>
       </div>
     </div>
-  `,
-  styles: [`
-    .neon-text {
-      text-shadow: 0 0 10px rgba(77, 255, 181, 0.3),
-                   0 0 20px rgba(77, 255, 181, 0.2),
-                   0 0 30px rgba(77, 255, 181, 0.1);
-    }
-
-    .tech-icon {
-      @apply flex flex-col items-center gap-2 p-3 rounded-lg bg-white/5 
-             hover:bg-white/10 transition-all duration-300 cursor-pointer;
-    }
-
-    .matrix-effect {
-      background: linear-gradient(180deg, 
-        transparent 0%,
-        rgba(77, 255, 181, 0.1) 50%,
-        transparent 100%
-      );
-      animation: matrix-rain 20s linear infinite;
-    }
-
-    @keyframes matrix-rain {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(1000px); }
-    }
-
-    .typing-text {
-      overflow: hidden;
-      border-right: 2px solid #4DFFB5;
-      white-space: nowrap;
-      animation: typing 3.5s steps(30, end),
-                blink-caret .75s step-end infinite;
-    }
-
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
-    }
-
-    @keyframes blink-caret {
-      from, to { border-color: transparent }
-      50% { border-color: #4DFFB5 }
-    }
-  `]
+  `
 })
 export class HomeComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('content') content!: ElementRef;
-  @ViewChild('canvas') private canvas!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('canvas') private canvasRef!: ElementRef<HTMLCanvasElement>;
   
   private scene!: THREE.Scene;
   private camera!: THREE.PerspectiveCamera;
   private renderer!: THREE.WebGLRenderer;
-  private computer!: THREE.Group;
-  private screenMaterial!: THREE.MeshBasicMaterial;
+  private sphere!: THREE.Mesh;
   private animationFrameId!: number;
-  private mouseX: number = 0;
-  private mouseY: number = 0;
-  private isBrowser: boolean;
 
-  constructor(private codeService: CodeDisplayService, @Inject(PLATFORM_ID) platformId: Object) {
-    this.isBrowser = isPlatformBrowser(platformId);
-  }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
-  ngAfterViewInit() {
-    if (this.isBrowser) {
-      // Register GSAP plugins
-      gsap.registerPlugin();
-      
-      // Initialize Three.js scene
+  ngAfterViewInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
       this.initScene();
-      this.screenMaterial = this.createScreenMaterial();
-      this.createComputer();
-      this.setupMouseListeners();
+      this.createSphere();
       this.animate();
-
-      // Add animations
-      gsap.from(this.content.nativeElement.children, {
-        duration: 1,
-        y: 100,
-        opacity: 0,
-        stagger: 0.2,
-        ease: "power3.out"
-      });
+      this.handleResize();
+      window.addEventListener('resize', this.handleResize.bind(this));
     }
   }
-
-  ngOnDestroy() {
-    if (this.isBrowser) {
-      if (this.animationFrameId) {
-        cancelAnimationFrame(this.animationFrameId);
-      }
-      if (this.renderer) {
-        this.renderer.dispose();
-      }
-      if (this.canvas?.nativeElement) {
-        this.canvas.nativeElement.removeEventListener('mousemove', this.handleMouseMove);
-        this.canvas.nativeElement.removeEventListener('mouseleave', this.handleMouseLeave);
-      }
-    }
-  }
-
-  private setupMouseListeners(): void {
-    if (this.canvas?.nativeElement) {
-      this.canvas.nativeElement.addEventListener('mousemove', this.handleMouseMove);
-      this.canvas.nativeElement.addEventListener('mouseleave', this.handleMouseLeave);
-    }
-  }
-
-  private handleMouseMove = (event: MouseEvent) => {
-    if (this.canvas?.nativeElement) {
-      const rect = this.canvas.nativeElement.getBoundingClientRect();
-      // Calculate mouse position relative to the center of the screen
-      this.mouseX = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
-      this.mouseY = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
-    }
-  };
-
-  private handleMouseLeave = () => {
-    // Smoothly return to center
-    this.mouseX = 0;
-    this.mouseY = 0;
-  };
 
   private initScene(): void {
     this.scene = new THREE.Scene();
     
-    const aspect = this.isBrowser ? window.innerWidth / window.innerHeight : 16 / 9;
-    this.camera = new THREE.PerspectiveCamera(65, aspect, 0.1, 1000);
-    this.camera.position.set(0, 0, 14);
-    
+    // Camera setup
+    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    this.camera.position.z = 5;
+
+    // Renderer setup
     this.renderer = new THREE.WebGLRenderer({
-      canvas: this.canvas.nativeElement,
-      antialias: true,
-      alpha: true
+      canvas: this.canvasRef.nativeElement,
+      alpha: true,
+      antialias: true
     });
 
-    if (this.canvas?.nativeElement?.parentElement) {
-      const container = this.canvas.nativeElement.parentElement;
-      const width = container.clientWidth;
-      const height = container.clientHeight;
-      this.renderer.setSize(width, height);
-      this.renderer.setPixelRatio(this.isBrowser ? window.devicePixelRatio : 1);
-    }
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0x00ff88, 0.5);
+    this.scene.add(ambientLight);
 
-    if (this.isBrowser) {
-      window.addEventListener('resize', this.handleResize);
-    }
-    
-    const ambientLight = new THREE.AmbientLight(0x404040, 0.8);
-    const keyLight = new THREE.DirectionalLight(0x4DFFB5, 1.2);
-    const fillLight = new THREE.DirectionalLight(0x2D9CDB, 0.8);
-    const backLight = new THREE.DirectionalLight(0xffffff, 0.5);
-    
-    keyLight.position.set(8, 8, 8);
-    fillLight.position.set(-8, 8, 8);
-    backLight.position.set(0, -8, -8);
-    
-    this.scene.add(ambientLight, keyLight, fillLight, backLight);
+    const pointLight = new THREE.PointLight(0x00ff88, 2);
+    pointLight.position.set(5, 5, 5);
+    this.scene.add(pointLight);
   }
 
-  private handleResize = (): void => {
-    if (this.canvas?.nativeElement?.parentElement) {
-      const container = this.canvas.nativeElement.parentElement;
-      const width = container.clientWidth;
-      const height = container.clientHeight;
-      
+  private createSphere(): void {
+    // Create main sphere
+    const geometry = new THREE.SphereGeometry(1.5, 32, 32);
+    const material = new THREE.MeshPhongMaterial({
+      color: 0x000000,
+      emissive: 0x00ff88,
+      emissiveIntensity: 0.5,
+      shininess: 90,
+      wireframe: true
+    });
+
+    this.sphere = new THREE.Mesh(geometry, material);
+    this.scene.add(this.sphere);
+
+    // Create outer glow sphere
+    const glowGeometry = new THREE.SphereGeometry(1.6, 32, 32);
+    const glowMaterial = new THREE.MeshPhongMaterial({
+      color: 0x00ff88,
+      transparent: true,
+      opacity: 0.1,
+      wireframe: true
+    });
+
+    const glowSphere = new THREE.Mesh(glowGeometry, glowMaterial);
+    this.scene.add(glowSphere);
+
+    // Animations
+    gsap.to(this.sphere.rotation, {
+      y: Math.PI * 2,
+      duration: 8,
+      repeat: -1,
+      ease: "none"
+    });
+
+    gsap.to(glowSphere.rotation, {
+      y: Math.PI * 2,
+      duration: 12,
+      repeat: -1,
+      ease: "none"
+    });
+
+    gsap.to([this.sphere.position, glowSphere.position], {
+      y: 0.2,
+      duration: 2,
+      yoyo: true,
+      repeat: -1,
+      ease: "power1.inOut"
+    });
+  }
+
+  private handleResize(): void {
+    if (this.canvasRef?.nativeElement) {
+      const width = this.canvasRef.nativeElement.clientWidth;
+      const height = this.canvasRef.nativeElement.clientHeight;
+
       this.camera.aspect = width / height;
       this.camera.updateProjectionMatrix();
-      
-      this.renderer.setSize(width, height);
+      this.renderer.setSize(width, height, false);
     }
-  };
-
-  private createScreenMaterial(): THREE.MeshBasicMaterial {
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-    canvas.width = 2048;  
-    canvas.height = 1024; 
-
-    if (context) {
-      // Set background
-      context.fillStyle = '#1E1E1E';
-      context.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Configure text settings
-      context.font = 'bold 40px Consolas, monospace';
-      context.fillStyle = '#4DFFB5';
-      
-      // Add file info bar
-      context.fillStyle = '#2D2D2D';
-      context.fillRect(0, 0, canvas.width, 60);
-      
-      context.fillStyle = '#4DFFB5';
-      context.font = '32px Consolas, monospace';
-      context.fillText('🗂 src/main/java/com/portfolio/demo/HomeController.java', 20, 40);
-
-      // Main content
-      const lines = [
-        '@RestController',
-        '@RequestMapping("/api")',
-        'public class HomeController {',
-        '    private final ProjectService projectService;',
-        '',
-        '    @Autowired',
-        '    public HomeController(ProjectService projectService) {',
-        '        this.projectService = projectService;',
-        '    }',
-        '',
-        '    @GetMapping("/projects")',
-        '    public ResponseEntity<List<Project>> getAllProjects() {',
-        '        return ResponseEntity.ok(projectService.findAll());',
-        '    }',
-        '',
-        '    @GetMapping("/skills")',
-        '    public ResponseEntity<List<Skill>> getSkills() {',
-        '        return ResponseEntity.ok(skillService.findAll());',
-        '    }',
-        '}'
-      ];
-
-      context.font = '36px Consolas, monospace';
-      let y = 100;
-      const lineHeight = 45;
-
-      // Add line numbers
-      context.fillStyle = '#666666';
-      for (let i = 0; i < lines.length; i++) {
-        context.fillText(String(i + 1).padStart(2, ' '), 20, y + i * lineHeight);
-      }
-
-      // Add code with syntax highlighting
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        let x = 80;
-
-        // Syntax highlighting
-        const words = line.split(' ');
-        words.forEach(word => {
-          if (word.startsWith('@')) {
-            context.fillStyle = '#C586C0'; // Purple for annotations
-          } else if (['public', 'private', 'class', 'final'].includes(word)) {
-            context.fillStyle = '#569CD6'; // Blue for keywords
-          } else if (word.includes('Controller') || word.includes('Service')) {
-            context.fillStyle = '#4EC9B0'; // Teal for class names
-          } else if (word.includes('(') || word.includes(')')) {
-            context.fillStyle = '#D4D4D4'; // White for parentheses
-          } else if (word.includes('<') || word.includes('>')) {
-            context.fillStyle = '#D4D4D4'; // White for generics
-          } else {
-            context.fillStyle = '#9CDCFE'; // Light blue for other text
-          }
-          
-          context.fillText(word, x, y + i * lineHeight);
-          x += context.measureText(word + ' ').width;
-        });
-      }
-    }
-
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.needsUpdate = true;
-    texture.minFilter = THREE.LinearFilter;
-    texture.magFilter = THREE.LinearFilter;
-
-    return new THREE.MeshBasicMaterial({
-      map: texture,
-      side: THREE.FrontSide
-    });
-  }
-
-  private createComputer(): void {
-    this.computer = new THREE.Group();
-
-    // Monitor frame - increased width
-    const monitorGeometry = new THREE.BoxGeometry(14, 6, 0.4);
-    const monitorMaterial = new THREE.MeshPhongMaterial({ 
-      color: 0x333333,
-      shininess: 100,
-      specular: 0x666666
-    });
-    const monitor = new THREE.Mesh(monitorGeometry, monitorMaterial);
-
-    // Screen
-    const screenGeometry = new THREE.PlaneGeometry(13.5, 5.5);
-    const screen = new THREE.Mesh(screenGeometry, this.screenMaterial);
-    screen.position.z = 0.21;
-
-    // Back panel
-    const backPanelGeometry = new THREE.PlaneGeometry(14, 6);
-    const backPanelMaterial = new THREE.MeshPhongMaterial({ 
-      color: 0x222222,
-      shininess: 50,
-      specular: 0x444444
-    });
-    const backPanel = new THREE.Mesh(backPanelGeometry, backPanelMaterial);
-    backPanel.position.z = -0.21;
-
-    // Monitor edges
-    const edgeThickness = 0.4;
-    const edgeMaterial = new THREE.MeshPhongMaterial({ 
-      color: 0x222222,
-      shininess: 80,
-      specular: 0x555555
-    });
-
-    // Top edge
-    const topEdgeGeometry = new THREE.BoxGeometry(14, edgeThickness, edgeThickness);
-    const topEdge = new THREE.Mesh(topEdgeGeometry, edgeMaterial);
-    topEdge.position.y = 3;
-
-    // Bottom edge
-    const bottomEdgeGeometry = new THREE.BoxGeometry(14, edgeThickness, edgeThickness);
-    const bottomEdge = new THREE.Mesh(bottomEdgeGeometry, edgeMaterial);
-    bottomEdge.position.y = -3;
-
-    // Stand assembly
-    const standGroup = new THREE.Group();
-
-    // Stand base
-    const baseGeometry = new THREE.CylinderGeometry(1.4, 1.6, 0.2, 32);
-    const base = new THREE.Mesh(baseGeometry, monitorMaterial);
-    base.position.y = -4.5;
-    base.position.z = -1;
-
-    // Stand pole
-    const poleGeometry = new THREE.CylinderGeometry(0.3, 0.3, 3, 16);
-    const pole = new THREE.Mesh(poleGeometry, monitorMaterial);
-    pole.position.y = -3;
-    pole.position.z = -0.5;
-
-    // Stand connector
-    const connectorGeometry = new THREE.BoxGeometry(3, 1, 0.4);
-    const connector = new THREE.Mesh(connectorGeometry, monitorMaterial);
-    connector.position.y = -1.5;
-    connector.position.z = -0.3;
-
-    standGroup.add(base, pole, connector);
-
-    // Add all components
-    const monitorGroup = new THREE.Group();
-    monitorGroup.add(monitor, screen, backPanel, topEdge, bottomEdge);
-    
-    this.computer.add(monitorGroup, standGroup);
-    this.scene.add(this.computer);
-
-    // Initial position and rotation
-    this.computer.position.y = 1;
-    
-    // Tilt the entire computer slightly back for better view
-    this.computer.rotation.x = Math.PI * 0.05;
   }
 
   private animate(): void {
     this.animationFrameId = requestAnimationFrame(() => this.animate());
-    
-    if (this.computer) {
-      // Calculate target rotation with increased sensitivity and limits
-      const targetRotationX = Math.max(-0.3, Math.min(0.3, this.mouseY * -0.5));
-      const targetRotationY = Math.max(-0.5, Math.min(0.5, this.mouseX * 0.5));
-      
-      // Smooth interpolation
-      this.computer.rotation.x += (targetRotationX - this.computer.rotation.x) * 0.1;
-      this.computer.rotation.y += (targetRotationY - this.computer.rotation.y) * 0.1;
-    }
-    
     this.renderer.render(this.scene, this.camera);
+  }
+
+  ngOnDestroy(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.removeEventListener('resize', this.handleResize.bind(this));
+      cancelAnimationFrame(this.animationFrameId);
+      this.renderer.dispose();
+    }
   }
 }
