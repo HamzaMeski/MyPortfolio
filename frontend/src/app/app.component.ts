@@ -10,7 +10,7 @@ import { SkillsComponent } from './features/skills/skills.component';
   imports: [CommonModule, HomeComponent, ProjectsComponent, SkillsComponent],
   template: `
     <!-- Fixed Sidebar -->
-    <nav class="fixed left-0 top-1/2 -translate-y-1/2 h-auto py-8 z-50">
+    <nav class="fixed left-0 top-1/2 -translate-y-1/2 h-auto py-8 z-50 md:block hidden">
       <!-- Background blur effect -->
       <div class="absolute inset-0 backdrop-blur-md bg-black/20"></div>
       
@@ -63,8 +63,30 @@ import { SkillsComponent } from './features/skills/skills.component';
       </div>
     </nav>
 
+    <!-- Mobile Navigation Bar (Bottom) -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-black/90 backdrop-blur-md border-t border-[#00ff88]/20 z-50 px-6 py-3">
+      <div class="flex justify-around items-center">
+        <a *ngFor="let item of menuItems" 
+           [href]="'#' + item.id"
+           (click)="scrollToSection($event, item.id)"
+           class="group relative flex flex-col items-center"
+           [class.active]="activeSection === item.id">
+          <div class="w-10 h-10 flex items-center justify-center relative">
+            <div class="absolute inset-0 rounded-xl bg-black/50 transform 
+                        group-hover:scale-90 transition-transform duration-300"></div>
+            <span class="relative text-lg font-bold text-[#00ff88] transform 
+                       group-hover:scale-110 transition-all duration-300
+                       opacity-60 group-hover:opacity-100">{{item.icon}}</span>
+          </div>
+          <span class="text-[10px] text-[#00ff88]/60 group-hover:text-[#00ff88] mt-1">
+            {{item.label}}
+          </span>
+        </a>
+      </div>
+    </nav>
+
     <!-- Main Content -->
-    <main class="ml-24">
+    <main class="md:ml-24 pb-20 md:pb-0">
       <section id="home" class="h-screen" #homeSection><app-home></app-home></section>
       <section id="skills" class="min-h-screen" #skillsSection><app-skills></app-skills></section>
       <section id="projects" class="min-h-screen" #projectsSection><app-projects></app-projects></section>
