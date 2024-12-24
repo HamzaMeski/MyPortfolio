@@ -1,6 +1,5 @@
 import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
 import { ProjectsComponent } from './features/projects/projects.component';
 import { SkillsComponent } from './features/skills/skills.component';
@@ -27,19 +26,20 @@ import { SkillsComponent } from './features/skills/skills.component';
            [class.active]="activeSection === item.id">
           
           <!-- Icon container with animations -->
-          <div class="w-12 h-12 flex items-center justify-center relative">
+          <div class="w-14 h-14 flex items-center justify-center relative">
             <!-- Background circle -->
             <div class="absolute inset-0 rounded-xl bg-black/50 transform 
                         group-hover:scale-90 transition-transform duration-300"></div>
             
             <!-- Glowing effect -->
             <div class="absolute inset-0 rounded-xl bg-[#00ff88]/10 opacity-0 
-                        group-hover:opacity-100 transition-opacity duration-300"></div>
+                        group-hover:opacity-100 transition-opacity duration-300
+                        shadow-[0_0_15px_rgba(0,255,136,0.3)]"></div>
             
-            <!-- Icon -->
-            <i [class]="item.icon" 
-               class="relative text-xl text-[#00ff88] transform group-hover:scale-110 
-                      transition-all duration-300"></i>
+            <!-- Letter Icon -->
+            <span class="relative text-2xl font-bold text-[#00ff88] transform 
+                       group-hover:scale-110 transition-all duration-300
+                       group-hover:text-white">{{item.icon}}</span>
           </div>
           
           <!-- Label tooltip -->
@@ -47,7 +47,8 @@ import { SkillsComponent } from './features/skills/skills.component';
                       border border-[#00ff88]/20 opacity-0 -translate-x-2
                       group-hover:opacity-100 group-hover:translate-x-0
                       transition-all duration-300 whitespace-nowrap">
-            <span class="text-[#00ff88] text-sm">{{item.label}}</span>
+            <span class="text-[#00ff88] text-sm font-medium">{{item.label}}</span>
+            <p class="text-gray-400 text-xs mt-1">{{item.description}}</p>
             
             <!-- Arrow -->
             <div class="absolute left-0 top-1/2 -translate-x-1 -translate-y-1/2 
@@ -77,8 +78,13 @@ import { SkillsComponent } from './features/skills/skills.component';
       color: #e5e7eb;
     }
 
-    .active i {
-      animation: pulse 2s infinite;
+    .active span {
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    }
+
+    .active .absolute:first-child {
+      background: rgba(0, 255, 136, 0.1);
+      box-shadow: inset 0 0 15px rgba(0, 255, 136, 0.2);
     }
 
     @keyframes pulse {
@@ -96,9 +102,24 @@ import { SkillsComponent } from './features/skills/skills.component';
 })
 export class AppComponent implements OnInit {
   menuItems = [
-    { id: 'home', label: 'Home', icon: 'fas fa-home' },
-    { id: 'skills', label: 'Technical Skills', icon: 'fas fa-code' },
-    { id: 'projects', label: 'Projects', icon: 'fas fa-project-diagram' }
+    { 
+      id: 'home', 
+      label: 'Home', 
+      icon: 'H',
+      description: 'Back to Home'
+    },
+    { 
+      id: 'skills', 
+      label: 'Technical Skills', 
+      icon: 'S',
+      description: 'View My Skills'
+    },
+    { 
+      id: 'projects', 
+      label: 'Projects', 
+      icon: 'P',
+      description: 'Browse Projects'
+    }
   ];
 
   activeSection: string = 'home';
